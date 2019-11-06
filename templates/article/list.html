@@ -1,15 +1,25 @@
 {% extends "index.html" %}
 
 {% block body %}
-<div  class="center">
+<div class="center">
     {% for article in articles %}
     <div class="card w-50 m-3" style="display:table;margin:1em auto !important;">
         <img class="card-img-top" src="/media/{{ article.thumbnail }}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{ article.title }} </h5>
-            <p class="card-text">{{ article.content }} </p>
-            <a href="#" class="card-link">Read More</a>
-            <a href="#" class="card-link">Another link</a>
+            <p class="card-text">{{ article.content | truncatewords:20 }} </p>
+            <hr>
+            <small class="row">
+                <div class="col">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i> {{ article.created_at | timesince }} ago
+                </div>
+                <div class="col">
+                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                     {{ article.author }}</div>
+                <div class="col">
+                    <a href="{% url 'article:detail' article.id %}" class="card-link">Read More</a>
+                </div>
+            </small>
         </div>
     </div>
     {% endfor %}
